@@ -48,5 +48,6 @@ Este projeto foi desenvolvido em colaboração com colegas da Universidade Presb
 - [Silvania Goularte Correia](https://github.com/silvaniacorreia)
 - [Danilo Leite](https://github.com/DDanDev)
 - [Rhyan Magalhães](https://github.com/paperspls)
+- [Renata Nunes](https://github.com/Renehx)
 
 ---
