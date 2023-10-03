@@ -2,7 +2,7 @@
 
 # 🌐 Site COVID-19 Tracker
 
-Bem-vindo ao Site COVID-19 Tracker, um projeto colaborativo desenvolvido por estudantes da Universidade Presbiteriana Mackenzie. Este site utiliza HTML, CSS e JavaScript para criar uma interface interativa que exibe dados da COVID-19 em três países: Japão, Brasil e Estados Unidos. Os dados são fornecidos por meio de uma API, oferecendo informações atualizadas sobre casos confirmados e óbitos.
+Bem-vindo ao Site COVID-19 Tracker, um projeto colaborativo desenvolvido por estudantes da Universidade Presbiteriana Mackenzie. Este site utiliza HTML, CSS e JavaScript para criar uma interface interativa que exibe dados da COVID-19 em três países: Japão, Brasil e Estados Unidos. Os dados são fornecidos por meio de uma API, oferecendo informações atualizadas sobre casos confirmados e óbitos, além da proporção de óbitos entre os casos confirmados.
 
 ## Funcionalidades Principais
 
@@ -12,7 +12,7 @@ Bem-vindo ao Site COVID-19 Tracker, um projeto colaborativo desenvolvido por est
 
 1. **Clone o Repositório:**
     ```bash
-    git clone https://github.com/seu-usuario/site-covid19-tracker.git
+    git clone https://github.com/paperspls/Site_COVID-19_Tracker.git
     ```
 
 2. **Acesse o Diretório:**

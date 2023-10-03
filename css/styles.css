@@ -62,3 +62,27 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+
+.card .progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #3498db; 
+    position: relative;
+}
+
+.card .progress-bar {
+    height: 100%;
+    background-color: #e74c3c; 
+    width: 0; 
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.legend-text-red {
+    color: #e74c3c;
+}
+
+.legend-text-blue {
+    color: #3498db;
+}
