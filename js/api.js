@@ -1,9 +1,12 @@
-const apiKey = 'lJRy4jThJ/02Qz8idYbcUg==9hlC0Mu9I8sctqgl';
+async function populateInfo(container) {
+    // create display for info
+    const infoContainer = document.createElement('div');
+    infoContainer.classList.add('infoContainer');
 
-async function fetchData(container) {
-    const apiUrl = `https://api.api-ninjas.com/v1/covid19?country=${container.id}`;
-    let data;
     try {
+        // fetch data
+        const apiUrl = `https://api.api-ninjas.com/v1/covid19?country=${container.id}`;
+        const apiKey = 'lJRy4jThJ/02Qz8idYbcUg==9hlC0Mu9I8sctqgl';
         const fetchCases = fetch(apiUrl, {
             method: 'GET',
             headers: { 'X-Api-Key': apiKey },
@@ -15,58 +18,63 @@ async function fetchData(container) {
             contentType: 'application/json',
         });
 
+        // treat response
         const [casesResponse, deathsResponse] = await Promise.all([fetchCases, fetchDeaths]);
-        const casesData = await casesResponse.json();
-        const deathsData = await deathsResponse.json();
-        data = { ...deathsData[0], ...casesData[0] };
+        const [casesData, deathsData] = await Promise.all([casesResponse.json(), deathsResponse.json()]);
+        if (casesData.length === 0 || deathsData.length === 0) throw 'País não encontrado'; // This api is absolutely horrible, doesn't respond with error status when it fails!
+        const data = { ...deathsData[0], ...casesData[0] }; // This api is absolutely horrible, responds all its content in a single array element!
+        let totalCases, totalDeaths;
+        try {
+            totalCases = parseInt(data.cases['2023-03-09'].total);
+            totalDeaths = parseInt(data.deaths['2023-03-09'].total);
+        } catch {
+            throw 'Não há dados para 9 de Março de 2023'
+        }
 
-        const card = document.createElement('div');
-        card.classList.add('card');
-
+        // create title
         const countryName = document.createElement('h2');
-        countryName.textContent = `País: ${data.country}`;
+        countryName.textContent = `País: ${container.id}`;
+        infoContainer.appendChild(countryName);
 
+        // create display of raw numbers
         const confirmedCases = document.createElement('p');
-        const totalCases = parseInt(data.cases['2023-03-09'].total);
-        confirmedCases.textContent = `Casos Confirmados: ${totalCases.toLocaleString()}`;
+        confirmedCases.textContent = `Casos confirmados: ${totalCases.toLocaleString()}`;
+        infoContainer.appendChild(confirmedCases);
 
         const deaths = document.createElement('p');
-        const totalDeaths = parseInt(data.deaths['2023-03-09'].total);
         deaths.textContent = `Mortes: ${totalDeaths.toLocaleString()}`;
+        infoContainer.appendChild(deaths);
 
-        const progressBarContainer = document.createElement('div');
-        progressBarContainer.classList.add('progress-bar-container');
+        // create percent display
+        const percentDisplay = document.createElement('div');
+        percentDisplay.insertAdjacentHTML('afterbegin', `<div class='percentLabels'><p>0%</p><p>10%</p></div>`);
+        infoContainer.appendChild(percentDisplay);
 
-        const fraction = (totalDeaths / totalCases) * 100;
+        const percentBar = document.createElement('div');
+        percentBar.classList.add('percentBar');
+        percentDisplay.appendChild(percentBar);
 
-        const progressBarBlue = document.createElement('div');
-        progressBarBlue.classList.add('progress-bar-blue');
-        progressBarBlue.style.width = `${100 - fraction}%`;
+        const percent = (totalDeaths / totalCases) * 100;
 
-        const progressBarRed = document.createElement('div');
-        progressBarRed.classList.add('progress-bar');
-        progressBarRed.style.width = `${fraction}%`;
+        const percentBarRed = document.createElement('div');
+        percentBarRed.classList.add('percentBarRed');
+        percentBarRed.style.width = `${percent * 10}%`;
+        percentBar.appendChild(percentBarRed);
 
-        progressBarContainer.appendChild(progressBarBlue);
-        progressBarContainer.appendChild(progressBarRed);
-
-        const legendDescription = document.createElement('span');
-        legendDescription.innerHTML = '<span class="legend-text-red">Mortes</span> / <span class="legend-text-blue">Casos Confirmados</span>';
-
-        card.appendChild(countryName);
-        card.appendChild(confirmedCases);
-        card.appendChild(deaths);
-        card.appendChild(progressBarContainer);
-        card.appendChild(legendDescription);        
-
-        container.appendChild(card);
+        const percentDescription = document.createElement('p');
+        percentDescription.classList.add('percentDescription', 'percentDescription');
+        percentDescription.textContent = `${percent.toFixed(2)}% mortalidade`;
+        percentDisplay.appendChild(percentDescription);
     } catch (error) {
-        console.error('Erro na requisição:', error);
-        return;
+        console.error(error);
+        infoContainer.innerHTML = `<p>Não foi possível receber os dados de api-ninjas.</p>`;
+    } finally {
+        // show it on page
+        container.appendChild(infoContainer);
     }
 }
 
 const countryContainers = document.getElementsByClassName('container');
 for (const container of countryContainers) {
-    fetchData(container);
+    populateInfo(container);
 }
