@@ -56,7 +56,7 @@ body {
 .infoContainer .percentBar {
     width: 100%;
     height: 1rem;
-    background-color: hsl(204, 70%, 53%); 
+    background-color: hsl(204, 70%, 53%);
     position: relative;
     overflow: hidden;
     border-radius: 5px;
@@ -69,7 +69,7 @@ body {
 
 .infoContainer .percentBarRed {
     height: 100%;
-    background-color: hsl(6, 78%, 57%); 
+    background-color: hsl(6, 78%, 57%);
     position: absolute;
     top: 0;
     left: 0;

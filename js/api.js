@@ -28,7 +28,7 @@ async function populateInfo(container) {
             totalCases = parseInt(data.cases['2023-03-09'].total);
             totalDeaths = parseInt(data.deaths['2023-03-09'].total);
         } catch {
-            throw 'Não há dados para 9 de Março de 2023'
+            throw 'Não há dados para 9 de Março de 2023';
         }
 
         // create title
