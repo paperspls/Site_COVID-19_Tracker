@@ -1,4 +1,6 @@
-**README.md**
+<p align="center">
+<img  height="350em" src="https://github.com/paperspls/Site_COVID-19_Tracker/blob/main/repositoryimage.jpeg">
+</p>
 
 # 🌐 Site COVID-19 Tracker
 
